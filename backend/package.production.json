@@ -1,0 +1,16 @@
+# Production Build Configuration
+# Add this to backend package.json scripts
+
+{
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "build": "echo 'No build needed for Node.js'",
+    "db:setup": "psql -U postgres -f ../database/schema.sql",
+    "db:migrate": "psql $DATABASE_URL -f ../database/schema.sql"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=9.0.0"
+  }
+}

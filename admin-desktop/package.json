@@ -1,0 +1,39 @@
+{
+  "name": "nfc-luxury-restaurant-admin",
+  "version": "1.0.0",
+  "description": "NFC Luxury Restaurant - Waiter Desktop Application",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder",
+    "build-win": "electron-builder --win --x64",
+    "build-linux": "electron-builder --linux"
+  },
+  "keywords": ["nfc", "restaurant", "waiter", "electron"],
+  "author": "Dubai Class Developer",
+  "license": "MIT",
+  "type": "commonjs",
+  "build": {
+    "appId": "com.nfcluxury.restaurant",
+    "productName": "NFC Luxury Restaurant",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.png"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "assets/icon.png"
+    }
+  },
+  "dependencies": {
+    "axios": "^1.21.0",
+    "electron": "^45.2.2",
+    "electron-builder": "^26.18.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "socket.io-client": "^4.8.4"
+  }
+}

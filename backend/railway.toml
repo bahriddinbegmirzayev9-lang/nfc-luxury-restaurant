@@ -1,0 +1,13 @@
+# Railway Configuration
+# This file tells Railway how to deploy the backend
+
+[build]
+builder = "NIXPACKS"
+
+[deploy]
+startCommand = "npm start"
+healthcheckPath = "/health"
+healthcheckTimeout = 30
+
+[env]
+NODE_ENV = "production"
