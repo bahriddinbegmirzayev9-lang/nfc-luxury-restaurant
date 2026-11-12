@@ -29,8 +29,13 @@ const io = initSocket(server);
 // Make io available to routes
 app.set('io', io);
 
-// Middleware
-app.use(cors(config.cors));
+// Middleware - CORS (Allow all origins)
+app.use(cors({
+  origin: '*',
+  credentials: false,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
