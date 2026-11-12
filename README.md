@@ -1,5 +1,9 @@
 # 🏆 NFC Luxury Restaurant System
 
+**🌐 LIVE PRODUCTION:** https://client-ebon-delta.vercel.app  
+**📡 API Backend:** https://nfc-luxury-restaurant-production.up.railway.app  
+**📅 Deployed:** 2026-11-12 | **Status:** ✅ PRODUCTION READY
+
 Dubai-class NFC-based restaurant management system with luxury UI and real-time features.
 
 ![Status](https://img.shields.io/badge/status-production%20ready-success)

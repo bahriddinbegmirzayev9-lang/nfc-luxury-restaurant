@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Test - NFC Restaurant</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #1a1a2e;
+            color: white;
+        }
+        .test-section {
+            background: #16213e;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border: 1px solid #0f3460;
+        }
+        h1 { color: #ffd700; }
+        h2 { color: #f5a623; }
+        pre {
+            background: #0a0a0a;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .loading { color: #ffd700; }
+        .success { color: #4caf50; }
+        .error { color: #ff5252; }
+        button {
+            background: linear-gradient(135deg, #ffd700 0%, #f5a623 100%);
+            color: #1a1a2e;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+        }
+        button:hover { opacity: 0.9; }
+    </style>
+</head>
+<body>
+    <h1>🏆 NFC Restaurant - API Test</h1>
+    <p>Testing Production Backend: <strong>https://nfc-luxury-restaurant-production.up.railway.app</strong></p>
+
+    <button onclick="testAll()">🧪 Test All Endpoints</button>
+    <button onclick="location.reload()">🔄 Reload</button>
+
+    <div class="test-section">
+        <h2>1️⃣ Health Check</h2>
+        <div id="health-status" class="loading">Testing...</div>
+        <pre id="health-result"></pre>
+    </div>
+
+    <div class="test-section">
+        <h2>2️⃣ Menu Categories</h2>
+        <div id="categories-status" class="loading">Testing...</div>
+        <pre id="categories-result"></pre>
+    </div>
+
+    <div class="test-section">
+        <h2>3️⃣ Menu Items</h2>
+        <div id="items-status" class="loading">Testing...</div>
+        <pre id="items-result"></pre>
+    </div>
+
+    <script>
+        const API_URL = 'https://nfc-luxury-restaurant-production.up.railway.app';
+
+        async function testEndpoint(name, url, resultId, statusId) {
+            try {
+                document.getElementById(statusId).innerHTML = '<span class="loading">⏳ Loading...</span>';
+
+                const response = await fetch(url);
+                const data = await response.json();
+
+                document.getElementById(resultId).textContent = JSON.stringify(data, null, 2);
+
+                if (data.success) {
+                    const count = data.data ? data.data.length : 'N/A';
+                    document.getElementById(statusId).innerHTML =
+                        `<span class="success">✅ Success! (${count} items)</span>`;
+                } else {
+                    document.getElementById(statusId).innerHTML =
+                        `<span class="error">⚠️ Success: false</span>`;
+                }
+            } catch (error) {
+                document.getElementById(statusId).innerHTML =
+                    `<span class="error">❌ Error: ${error.message}</span>`;
+                document.getElementById(resultId).textContent = error.stack;
+            }
+        }
+
+        async function testAll() {
+            await testEndpoint('Health', `${API_URL}/health`, 'health-result', 'health-status');
+            await testEndpoint('Categories', `${API_URL}/api/v1/menu/categories`, 'categories-result', 'categories-status');
+            await testEndpoint('Items', `${API_URL}/api/v1/menu/items`, 'items-result', 'items-status');
+        }
+
+        // Auto-run on load
+        window.onload = testAll;
+    </script>
+</body>
+</html>

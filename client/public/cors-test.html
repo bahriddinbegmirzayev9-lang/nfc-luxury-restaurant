@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick CORS Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #1a1a2e;
+            color: white;
+            text-align: center;
+        }
+        .status {
+            padding: 40px;
+            margin: 20px 0;
+            border-radius: 15px;
+            font-size: 24px;
+        }
+        .loading { background: #ffa500; color: #000; }
+        .success { background: #4caf50; }
+        .error { background: #ff5252; }
+        button {
+            background: #ffd700;
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 10px;
+        }
+        button:hover { opacity: 0.9; }
+    </style>
+</head>
+<body>
+    <h1>🧪 CORS Test</h1>
+    <p>Testing: https://nfc-luxury-restaurant-production.up.railway.app</p>
+
+    <div id="status" class="status loading">⏳ Testing...</div>
+
+    <button onclick="testNow()">🔄 Test Again</button>
+    <button onclick="window.location.href='/'">🏠 Go to Menu</button>
+
+    <script>
+        async function testNow() {
+            const statusEl = document.getElementById('status');
+            statusEl.className = 'status loading';
+            statusEl.textContent = '⏳ Testing CORS...';
+
+            try {
+                const response = await fetch('https://nfc-luxury-restaurant-production.up.railway.app/api/v1/menu/categories');
+                const data = await response.json();
+
+                if (data.success && data.data.length > 0) {
+                    statusEl.className = 'status success';
+                    statusEl.innerHTML = `✅ SUCCESS!<br>Got ${data.data.length} categories<br><br>CORS Fixed! 🎉`;
+
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 2000);
+                } else {
+                    statusEl.className = 'status error';
+                    statusEl.textContent = '⚠️ API returned but no data';
+                }
+            } catch (error) {
+                statusEl.className = 'status error';
+                statusEl.innerHTML = `❌ CORS Error Still Exists<br><br>${error.message}<br><br>Railway still deploying...`;
+            }
+        }
+
+        window.onload = testNow;
+    </script>
+</body>
+</html>
